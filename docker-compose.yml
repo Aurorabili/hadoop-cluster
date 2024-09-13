@@ -1,0 +1,38 @@
+version: '3'
+services:
+  namenode:
+    image: dockerfile.armv8
+    container_name: namenode
+    hostname: namenode
+    volumes:
+      - namenode_data:/hadoop/dfs/name
+    ports:
+      - "50070:50070"
+    networks:
+      - hadoop_network
+
+  datanode1:
+    image: dockerfile.armv8
+    container_name: datanode1
+    hostname: datanode1
+    volumes:
+      - datanode1_data:/hadoop/dfs/data
+    networks:
+      - hadoop_network
+
+  datanode2:
+    image: dockerfile.armv8
+    container_name: datanode2
+    hostname: datanode2
+    volumes:
+      - datanode2_data:/hadoop/dfs/data
+    networks:
+      - hadoop_network
+
+networks:
+  hadoop_network:
+
+volumes:
+  namenode_data:
+  datanode1_data:
+  datanode2_data:
