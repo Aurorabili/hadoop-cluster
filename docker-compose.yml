@@ -1,38 +1,36 @@
-version: '3'
+version: "3.7"
 services:
   namenode:
-    image: dockerfile.armv8
-    container_name: namenode
-    hostname: namenode
-    volumes:
-      - namenode_data:/hadoop/dfs/name
+    build: .
     ports:
-      - "50070:50070"
+      - "39870:9870"
+      - "38088:8088"
+    command: >
+      bash -c "hdfs namenode & yarn resourcemanager "
+    hostname: hdfs-namenode
     networks:
-      - hadoop_network
+      - hadoop-network
 
-  datanode1:
-    image: dockerfile.armv8
-    container_name: datanode1
-    hostname: datanode1
-    volumes:
-      - datanode1_data:/hadoop/dfs/data
+  datanode:
+    build: .
+    hostname: datanode
+    depends_on:
+      - namenode
+    command: >
+      bash -c "hdfs datanode & yarn nodemanager "
+    ports:
+      - "39864:9864"
     networks:
-      - hadoop_network
+      - hadoop-network
 
-  datanode2:
-    image: dockerfile.armv8
-    container_name: datanode2
-    hostname: datanode2
-    volumes:
-      - datanode2_data:/hadoop/dfs/data
+  secondarynamenode:
+    build: .
+    command: hdfs secondarynamenode
+    ports:
+      - "39868:9868"
     networks:
-      - hadoop_network
+      - hadoop-network
 
 networks:
-  hadoop_network:
-
-volumes:
-  namenode_data:
-  datanode1_data:
-  datanode2_data:
+  hadoop-network:
+    driver: bridge

@@ -22,7 +22,7 @@ ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
 # Set Hadoop environment variables
 ENV HADOOP_VERSION=3.4.0
-ENV HADOOP_URL=https://downloads.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}-aarch64.tar.gz
+ENV HADOOP_URL=https://downloads.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz
 ENV HADOOP_HOME=/opt/hadoop
 ENV HADOOP_OPTS=-Djava.library.path=${HADOOP_HOME}/lib/native
 ENV PATH="$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin"
