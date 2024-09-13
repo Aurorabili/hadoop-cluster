@@ -2,28 +2,36 @@
 
 This project is a mini hadoop cluster in docker, including one master and two slaves.
 
-## 🍪 How to use
+## 🚀 Quick Start
 
-### 1. Clone the project
+### Clone the project
 
 ```bash
 git clone https://github.com/Aurorabili/hadoop-cluster
 ```
 
-### 2. Build the docker image
+### Build the docker image
 
 ```bash
 cd hadoop-cluster
 docker compose build
 ```
 
-### 3. Start the cluster
+### Start the cluster
 
 ```bash
 docker compose up -d
 ```
 
-### 4. Access Web UI
+### Access Web UI
 
 - Hadoop: [http://localhost:39870](http://localhost:39870)
 - YARN: [http://localhost:38088](http://localhost:38088)
+
+## Use SSH
+
+All nodes have SSH service but it is not running by default. You can start it by running the following command:
+
+```bash
+docker exec -it ${container-hash} sudo service ssh start
+```
