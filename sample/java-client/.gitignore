@@ -1,0 +1,44 @@
+# Maven target directory
+/target/
+
+# IntelliJ IDEA project files
+/.idea/
+/*.iml
+
+# Logs
+/logs/
+/*.log
+
+# Compiled class files
+*.class
+
+# Package Files
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Eclipse
+.project
+.classpath
+.c9/
+.settings/
+
+# VS Code
+.vscode/
+
+# Mac OS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Others
+*.swp
+*~
