@@ -1,10 +1,13 @@
-version: "3.7"
 services:
   namenode:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hadoop-shared-baseimage
     ports:
       - "39870:9870"
       - "38088:8088"
+      - "39000:9000"
     command: >
       bash -c "hdfs namenode & yarn resourcemanager "
     hostname: hdfs-namenode
@@ -12,7 +15,7 @@ services:
       - hadoop-network
 
   datanode:
-    build: .
+    image: hadoop-shared-baseimage
     hostname: datanode
     depends_on:
       - namenode
@@ -24,8 +27,10 @@ services:
       - hadoop-network
 
   secondarynamenode:
-    build: .
+    image: hadoop-shared-baseimage
     command: hdfs secondarynamenode
+    depends_on:
+      - namenode
     ports:
       - "39868:9868"
     networks:
