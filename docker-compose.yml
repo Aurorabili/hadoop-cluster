@@ -8,11 +8,20 @@ services:
       - "39870:9870"
       - "38088:8088"
       - "39000:9000"
+      - "39832:9832"
     command: >
-      bash -c "hdfs namenode & yarn resourcemanager "
+      bash -c "echo '1' > /data/zookeeper/myid & \
+               zkServer.sh start & \
+               hdfs namenode & \ 
+               yarn resourcemanager & \
+               hbase master start"
     hostname: hdfs-namenode
     networks:
-      - hadoop-network
+      hadoop-network:
+        ipv4_address: 192.168.182.2
+    extra_hosts:
+      - "datanode:192.168.182.3"
+      - "secondarynamenode:192.168.182.4"
 
   datanode:
     image: hadoop-shared-baseimage
@@ -20,22 +29,35 @@ services:
     depends_on:
       - namenode
     command: >
-      bash -c "hdfs datanode & yarn nodemanager "
+      bash -c "echo '2' > /data/zookeeper/myid & zkServer.sh start & hdfs datanode & yarn nodemanager & hbase regionserver start"
     ports:
       - "39864:9864"
     networks:
-      - hadoop-network
+      hadoop-network:
+        ipv4_address: 192.168.182.3
+    extra_hosts:
+      - "hdfs-namenode:192.168.182.2"
+      - "secondarynamenode:192.168.182.4"
 
   secondarynamenode:
     image: hadoop-shared-baseimage
-    command: hdfs secondarynamenode
+    hostname: secondarynamenode
+    command: >
+      bash -c "echo '3' > /data/zookeeper/myid & zkServer.sh start & hdfs secondarynamenode & yarn nodemanager & hbase regionserver start"
     depends_on:
       - namenode
     ports:
       - "39868:9868"
     networks:
-      - hadoop-network
+      hadoop-network:
+        ipv4_address: 192.168.182.4
+    extra_hosts:
+      - "hdfs-namenode:192.168.182.2"
+      - "datanode:192.168.182.3"
 
 networks:
   hadoop-network:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.182.0/24

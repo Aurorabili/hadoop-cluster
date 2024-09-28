@@ -1,0 +1,23 @@
+<configuration>
+<property>
+    <name>hbase.rootdir</name>
+    <!-- hbase存放数据目录 -->
+    <value>hdfs://hdfs-namenode:9000/hbase</value>
+    <!-- 端口要和Hadoop的fs.defaultFS端口一致-->
+</property>
+<property>
+    <name>hbase.cluster.distributed</name>
+    <!-- 是否分布式部署 -->
+    <value>true</value>
+</property>
+<property>
+    <!--hbase master -->
+    <name>hbase.master</name>
+    <value>hdfs-namenode</value>
+</property>
+<property>
+    <!--hbase web 端口 -->
+    <name>hbase.master.info.port</name>
+    <value>9832</value>
+</property>
+</configuration>
